@@ -8,23 +8,18 @@ env:
   DEVICE_CODENAME: "platina"
 
   CUSTOM_CMDS: "CLANG_TRIPLE=aarch64-linux-gnu-"
-  EXTRA_CMDS: "LD=ld.lld CROSS_COMPILE_ARM32=arm-linux-androideabi-"
-  GCC_64_SOURCE: "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9.git"
-  GCC_64_BRANCH: "android12L-release"
-  GCC_32_SOURCE: "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9.git"
-  GCC_32_BRANCH: "android12L-release"
+  EXTRA_CMDS: "LD=ld.lld"
 
   KERNEL_SOURCE: "https://github.com/sakimidare/platinum_kernel_xiaomi_platina.git"
   KERNEL_BRANCH: "eas-bpf-new"
 
-  CLANG_SOURCE: "https://github.com/ravindu644/proton-12.git"
-  CLANG_BRANCH: "main"
+  CLANG_SOURCE: "https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.7/LLVM-19.1.7-Linux-X64.tar.xz"
+  CLANG_BRANCH: ""
 
-  GCC_GNU: true
+  GCC_GNU: false
 
   DEFCONFIG_NAME: "platina_defconfig"
-  BUILD_OTHER_CONFIG: "false"
-  # No merge needed for 4.4 kernel
+  BUILD_OTHER_CONFIG: false
 
   KERNELSU_AUTO_GET: "true"
   KERNELSU_AUTO_FORK: "resukisu"
@@ -44,17 +39,14 @@ env:
 
   PYTHON_VERSION: "3"
   NEED_DTBO: false
-
   GENERATE_DTB: false
   GENERATE_CHIP: "qcom"
-
   REKERNEL_ENABLE: false
-  KERNELSU_SUS_PATCH: "false"
 
 jobs:
   build:
     name: Xiaomi Platina (A10)
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
       CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
       CCACHE_NOHASHDIR: "true"
