@@ -22,9 +22,9 @@ env:
   GCC_32_SOURCE: "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9.git"
   GCC_32_BRANCH: "android12L-release"
 
-  DEFCONFIG_NAME: "vendor/sdm660_defconfig"
-  BUILD_OTHER_CONFIG: "true"
-  MERGE_CONFIG_FILES: "vendor/xiaomi/sdm660.config,vendor/xiaomi/platina.config"
+  DEFCONFIG_NAME: "platina_defconfig"
+  BUILD_OTHER_CONFIG: "false"
+  # No merge needed for 4.4 kernel
 
   KERNELSU_AUTO_GET: "true"
   KERNELSU_AUTO_FORK: "resukisu"
