@@ -117,8 +117,8 @@ jobs:
           # Fix fault-inject.c for LLVM 19
           sed -i 's/if (!WRITE_ONCE(current->fail_nth, fail_nth - 1))/WRITE_ONCE(current->fail_nth, fail_nth - 1); if (fail_nth == 1)/' lib/fault-inject.c
           # Fix DTS missing nodes
-          sed -i '//&pm660_coincell {/,/^};/dpm660_coincell {/,/^[[:space:]]*};/d' arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/platina/platina-sdm660.dtsi
-          sed -i '//&sensor_information15 {/,/^};/dsensor_information15 {/,/^[[:space:]]*};/d' arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/sdm660-overlay.dtsi
+          sed -i '/&pm660_coincell {/,/^[[:space:]]*};/d' arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/platina/platina-sdm660.dtsi
+          sed -i '/&sensor_information15 {/,/^[[:space:]]*};/d' arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/sdm660-overlay.dtsi
           # Add missing configs
           echo "CONFIG_ANDROID_VENDOR_HOOKS=y" >> arch/${{ env.KERNEL_ARCH }}/configs/${{ env.DEFCONFIG_NAME }}
           echo "# CONFIG_LLVM_POLLY is not set" >> arch/${{ env.KERNEL_ARCH }}/configs/${{ env.DEFCONFIG_NAME }}
