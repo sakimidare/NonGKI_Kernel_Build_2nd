@@ -125,8 +125,7 @@ jobs:
           sed -i '/&sensor_information15 {/,/^};/d' arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/sdm660-overlay.dtsi
           # Add missing configs
           echo "CONFIG_ANDROID_VENDOR_HOOKS=y" >> arch/${{ env.KERNEL_ARCH }}/configs/${{ env.DEFCONFIG_NAME }}
-          # Disable LLVM_POLLY
-          sed -i 's/CONFIG_LLVM_POLLY=y/# CONFIG_LLVM_POLLY is not set/' out/.config 2>/dev/null || true
+          echo "# CONFIG_LLVM_POLLY is not set" >> arch/${{ env.KERNEL_ARCH }}/configs/${{ env.DEFCONFIG_NAME }}
 
       - name: 🧰 Patch Kernel of Re:Kernel
         uses: ./.github/workflows/patch-rekernel
