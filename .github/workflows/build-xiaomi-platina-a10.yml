@@ -13,8 +13,8 @@ env:
   KERNEL_SOURCE: "https://github.com/sakimidare/platinum_kernel_xiaomi_platina.git"
   KERNEL_BRANCH: "eas-bpf-new"
 
-  CLANG_SOURCE: "https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.7/LLVM-19.1.7-Linux-X64.tar.xz"
-  CLANG_BRANCH: ""
+  CLANG_SOURCE: "https://github.com/ravindu644/clang-r383902b.git"
+  CLANG_BRANCH: "main"
 
   GCC_GNU: false
 
@@ -46,7 +46,7 @@ env:
 jobs:
   build:
     name: Xiaomi Platina (A10)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
       CCACHE_NOHASHDIR: "true"
