@@ -46,7 +46,7 @@ env:
   NEED_DTBO : false
   NEED_SAFE_DTBO : false
 
-  ROM_TEXT : "arrow_os_a10"
+  ROM_TEXT : "lineageos22_a15"
 
   # Other env
   PYTHON_VERSION: "3" # Only 2(Ubuntu 22.04 and Ubuntu 20.04) or 3(Any OS Versions).
@@ -90,7 +90,7 @@ env:
 
 jobs:
   build-kernel:
-    name: Xiaomi Platina (A10)
+    name: Xiaomi Mi Pad 4 (LineageOS 22 A15)
     runs-on: ubuntu-latest # u can changed to ubuntu 22.04, and need container set ubuntu-latest
     # container: archlinux/archlinux:latest # if u need use arch linux -> archlinux/archlinux:latest or ubuntu 20.04 -> ubuntu:focal
     env:
@@ -116,87 +116,28 @@ jobs:
 
       - name: 🪛 Extra Kernel Options
         run: |
+          # Only ${{ env.DEVICE_NAME }} use it.
+          cd $GITHUB_WORKSPACE/device_kernel
           echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
           echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
           echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
           echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
+          # Nothing
+
+      - name: 🧰 Patch Kernel of Re:Kernel
+        uses: ./.github/workflows/patch-rekernel
+
+      - name: 💿 Patch Kernel of Droidspaces
+        uses: ./.github/workflows/patch-droidspaces
+
+      - name: 🔒 Patch Kernel of Baseband Guard
+        uses: ./.github/workflows/patch-baseband-guard
+
+      - name: 🚀 Build Process
+        uses: ./.github/workflows/build-process
+
+      - name: 🔩 Pack Process
+        uses: ./.github/workflows/pack-process
+
+      - name: ✏️ Upload Artifacts
+        uses: ./.github/workflows/upload-files
