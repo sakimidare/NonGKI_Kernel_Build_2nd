@@ -11,7 +11,7 @@ env:
   EXTRA_CMDS: "LD=ld.lld CROSS_COMPILE_ARM32=arm-linux-gnueabihf-"
 
   KERNEL_SOURCE: "https://github.com/sakimidare/platinum_kernel_xiaomi_platina.git"
-  KERNEL_BRANCH: "eas-bpf-new-nongki-build"
+  KERNEL_BRANCH: "eas-bpf-new"
 
   CLANG_SOURCE: "https://github.com/ravindu644/proton-12.git"
   CLANG_BRANCH: "main"
