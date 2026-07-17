@@ -1,0 +1,71 @@
+name: Build Xiaomi Platina (A10)
+
+on:
+  workflow_dispatch:
+
+env:
+  DEVICE_NAME: "xiaomi_platina"
+  DEVICE_CODENAME: "platina"
+
+  CUSTOM_CMDS: "CLANG_TRIPLE=aarch64-linux-gnu-"
+  EXTRA_CMDS: "LD=ld.lld CROSS_COMPILE_ARM32=arm-linux-gnueabihf-"
+
+  KERNEL_SOURCE: "https://github.com/sakimidare/platinum_kernel_xiaomi_platina.git"
+  KERNEL_BRANCH: "eas-bpf-new-nongki-build"
+
+  CLANG_SOURCE: "https://github.com/ravindu644/proton-12.git"
+  CLANG_BRANCH: "main"
+
+  GCC_GNU: true
+  GCC_64_SOURCE: "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9.git"
+  GCC_64_BRANCH: "android12L-release"
+  GCC_32_SOURCE: "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9.git"
+  GCC_32_BRANCH: "android12L-release"
+
+  DEFCONFIG_NAME: "vendor/sdm660_defconfig"
+  BUILD_OTHER_CONFIG: "true"
+  MERGE_CONFIG_FILES: "vendor/xiaomi/sdm660.config,vendor/xiaomi/platina.config"
+
+  KERNELSU_AUTO_GET: "true"
+  KERNELSU_AUTO_FORK: "resukisu"
+  KERNELSU_METHOD: "shell"
+
+  SUSFS_ENABLE: false
+
+  DROIDSPACES_ENABLE: true
+
+  HOOK_METHOD: "syscall"
+
+  AK3_SOURCE: "https://github.com/osm0sis/AnyKernel3.git"
+  AK3_BRANCH: "master"
+
+  PACK_METHOD: "Anykernel3"
+  ROM_TEXT: "arrow_os_a10"
+
+  PYTHON_VERSION: "3"
+  NEED_DTBO: false
+
+  GENERATE_DTB: false
+  GENERATE_CHIP: "qcom"
+
+  REKERNEL_ENABLE: false
+  KERNELSU_SUS_PATCH: "false"
+
+jobs:
+  build:
+    name: Xiaomi Platina (A10)
+    runs-on: ubuntu-latest
+    env:
+      CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
+      CCACHE_NOHASHDIR: "true"
+      CCACHE_HARDLINK: "true"
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/workflows/build-env
+      - uses: ./.github/workflows/build-ready
+      - uses: ./.github/workflows/patch-no-kprobe
+      - uses: ./.github/workflows/patch-droidspaces
+      - uses: ./.github/workflows/build-process
+      - uses: ./.github/workflows/pack-process
+      - uses: ./.github/workflows/upload-files
