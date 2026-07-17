@@ -118,10 +118,10 @@ jobs:
         run: |
           # Only ${{ env.DEVICE_NAME }} use it.
           cd $GITHUB_WORKSPACE/device_kernel
-          echo "CONFIG_NF_LOG_IPV4=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_IPV6=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NF_LOG_SYSLOG=y" >> arch/arm64/configs/platina_defconfig
-          echo "CONFIG_NETFILTER_XT_TARGET_LOG=y" >> arch/arm64/configs/platina_defconfig
+          sed -i "s/# CONFIG_NF_LOG_IPV4 is not set/CONFIG_NF_LOG_IPV4=y/" arch/arm64/configs/platina_defconfig
+          sed -i "s/# CONFIG_NF_LOG_IPV6 is not set/CONFIG_NF_LOG_IPV6=y/" arch/arm64/configs/platina_defconfig
+          sed -i "s/# CONFIG_NETFILTER_XT_TARGET_LOG is not set/CONFIG_NETFILTER_XT_TARGET_LOG=y/" arch/arm64/configs/platina_defconfig
+          sed -i "s/# CONFIG_NF_LOG_ARP is not set/CONFIG_NF_LOG_ARP=y/" arch/arm64/configs/platina_defconfig
           # Nothing
 
       - name: 🧰 Patch Kernel of Re:Kernel
