@@ -10,7 +10,7 @@ env:
   DEVICE_CODENAME : "platina"
 
   CUSTOM_CMDS : "CLANG_TRIPLE=aarch64-linux-gnu-"
-  EXTRA_CMDS : "LD=ld.lld LLVM=1 LLVM_IAS=1"
+  EXTRA_CMDS : "LD=ld.lld LLVM=1 LLVM_IAS=1 KCFLAGS=-Wno-default-const-init-var-unsafe -Wno-default-const-init-field-unsafe -Wno-implicit-enum-enum-cast -Wno-enum-enum-conversion -Wno-strict-prototypes -Wno-implicit-function-declaration"
 
   KERNEL_SOURCE : "https://github.com/LineageOS/android_kernel_xiaomi_sdm660"
   KERNEL_BRANCH : "lineage-22.2"
@@ -118,7 +118,15 @@ jobs:
         run: |
           # Only ${{ env.DEVICE_NAME }} use it.
           cd $GITHUB_WORKSPACE/device_kernel
-          # Nothing
+          # Fix fault-inject.c for LLVM 19
+          sed -i 's/if (!WRITE_ONCE(current->fail_nth, fail_nth - 1))/WRITE_ONCE(current->fail_nth, fail_nth - 1); if (fail_nth == 1)/' lib/fault-inject.c
+          # Fix DTS missing nodes
+          sed -i '/&pm660_coincell {/,/^};/d' arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/platina/platina-sdm660.dtsi
+          sed -i '/&sensor_information15 {/,/^};/d' arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/sdm660-overlay.dtsi
+          # Add missing configs
+          echo "CONFIG_ANDROID_VENDOR_HOOKS=y" >> arch/${{ env.KERNEL_ARCH }}/configs/${{ env.DEFCONFIG_NAME }}
+          # Disable LLVM_POLLY
+          sed -i 's/CONFIG_LLVM_POLLY=y/# CONFIG_LLVM_POLLY is not set/' out/.config 2>/dev/null || true
 
       - name: 🧰 Patch Kernel of Re:Kernel
         uses: ./.github/workflows/patch-rekernel
