@@ -54,7 +54,7 @@ env:
 jobs:
   build:
     name: Xiaomi Platina (A10)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
       CCACHE_NOHASHDIR: "true"
