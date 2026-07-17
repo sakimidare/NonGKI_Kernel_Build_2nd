@@ -19,9 +19,13 @@ env:
   CLANG_BRANCH : ""
 
   GCC_GNU : false
+  GCC_64_SOURCE : "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9.git"
+  GCC_64_BRANCH : "android12L-release"
+  GCC_32_SOURCE : "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9.git"
+  GCC_32_BRANCH : "android12L-release"
 
   DEFCONFIG_SOURCE: ""
-  DEFCONFIG_NAME : "vendor/sdm660_defconfig"
+  DEFCONFIG_NAME : "platina_defconfig"
   DEFCONFIG_ORIGIN_IMAGE: ""
   DEFCONFIG_FROM_BOOT: false
 
@@ -80,13 +84,13 @@ env:
   SKIP_PATCH: "false" # Ignore errors found in Patch Debugger.
 
   BUILD_OTHER_CONFIG: "true" # Merge config files.
-  MERGE_CONFIG_FILES: "vendor/xiaomi/sdm660.config,vendor/xiaomi/platina.config"
+  MERGE_CONFIG_FILES: "vendor/debugfs.config,vendor/lahaina_QGKI.config"
 
   FREE_MORE_SPACE: "false" # if u want get more space, enabled it.
 
 jobs:
   build-kernel:
-    name: Xiaomi Platina (A10)
+    name: Xiaomi Mi Pad 4 (LineageOS 22 A15)
     runs-on: ubuntu-latest # u can changed to ubuntu 22.04, and need container set ubuntu-latest
     # container: archlinux/archlinux:latest # if u need use arch linux -> archlinux/archlinux:latest or ubuntu 20.04 -> ubuntu:focal
     env:
@@ -114,14 +118,11 @@ jobs:
         run: |
           # Only ${{ env.DEVICE_NAME }} use it.
           cd $GITHUB_WORKSPACE/device_kernel
-          # Fix fault-inject.c for LLVM 19
-          sed -i 's/if (!WRITE_ONCE(current->fail_nth, fail_nth - 1))/WRITE_ONCE(current->fail_nth, fail_nth - 1); if (fail_nth == 1)/' lib/fault-inject.c
-          # Fix DTS missing nodes
-          sed -i '/&pm660_coincell {/,/^[[:space:]]*};/d' arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/platina/platina-sdm660.dtsi
-          sed -i '/&sensor_information15 {/,/^[[:space:]]*};/d' arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/sdm660-overlay.dtsi
-          # Add missing configs
+          sed -i "s/if (!WRITE_ONCE(current->fail_nth, fail_nth - 1))/WRITE_ONCE(current->fail_nth, fail_nth - 1); if (fail_nth == 1)/" lib/fault-inject.c
+          sed -i "/&pm660_coincell {/,/^};/d" arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/platina/platina-sdm660.dtsi 2>/dev/null || true
+          sed -i "/&sensor_information15 {/,/^};/d" arch/arm64/boot/dts/vendor/qcom/xiaomi/mi/sdm660-overlay.dtsi 2>/dev/null || true
           echo "CONFIG_ANDROID_VENDOR_HOOKS=y" >> arch/${{ env.KERNEL_ARCH }}/configs/${{ env.DEFCONFIG_NAME }}
-          echo "# CONFIG_LLVM_POLLY is not set" >> arch/${{ env.KERNEL_ARCH }}/configs/${{ env.DEFCONFIG_NAME }}
+          # Nothing
 
       - name: 🧰 Patch Kernel of Re:Kernel
         uses: ./.github/workflows/patch-rekernel
@@ -134,19 +135,6 @@ jobs:
 
       - name: 🚀 Build Process
         uses: ./.github/workflows/build-process
-
-
-      - name: 🔍 Debug Config Before Build
-        run: |
-          cd $GITHUB_WORKSPACE/device_kernel
-          echo "=========================================="
-          echo "       FINAL KERNEL CONFIG SUMMARY"
-          echo "=========================================="
-          grep -E "CONFIG_KPM|CONFIG_KALLSYMS_ALL|CONFIG_KALLSYMS|CONFIG_DEBUG_KERNEL|CONFIG_KSU|CONFIG_NF_LOG|CONFIG_NETFILTER_XT_TARGET_LOG|CONFIG_NETFILTER_NETLINK_LOG|CONFIG_PID_NS|CONFIG_MEMCG|CONFIG_NF_CT_NETLINK|CONFIG_OVERLAY_FS|CONFIG_VETH|CONFIG_NET_NS" out/.config || true
-          echo "------------------------------------------"
-          echo "Total y: $(grep -c =y out/.config)"
-          echo "Total m: $(grep -c =m out/.config)"
-          echo "=========================================="
 
       - name: 🔩 Pack Process
         uses: ./.github/workflows/pack-process
